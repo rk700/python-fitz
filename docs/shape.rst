@@ -620,15 +620,23 @@ Common Parameters
 
 **miter_limit** (*float*)
 
-  A float specifying the maximum acceptable value of the quotient `(miter length) / (border line width)`. Used in text output methods, this is only relevant for non-zero render mode values -- then characters are written with border lines (i.e. "stroked"). If two lines stroking a character meet at a sharp (<= 90°) angle and the border line width is large enough, then "spikes" may become visible -- causing an ugly appearance. For visualization of this see page 126 of the :ref:`AdobeManual`. For instance, when joined lines meet at an angle of 90°, then the miter length is ``sqrt(2) * (border line width)``, so their miter quotient is ``sqrt(2)``. If ``miter_limit`` is exceeded, then all line joins meeting at a sharper angle will be appear as beveled ("butt" appearance). The default value 1 will ensure that line joins always appear as beveled. A value of ``None`` will cause a PDF default value.
+  A float specifying the maximum acceptable value of the quotient `miter-length / line-width` ("miter quotient"). Used in text output methods. This is only relevant for non-zero render mode values -- then, characters are written with border lines (i.e. "stroked").
+  
+  If two lines stroking some character meet at a sharp (<= 90°) angle and the line width is large enough, then "spikes" may become visible -- causing an ugly appearance as shown below. For more background, see page 126 of the :ref:`AdobeManual`.
+    
+  For instance, when joins meet at 90°, then the miter length is ``sqrt(2) * line-width``, so the miter quotient is ``sqrt(2)``.
+  
+  If ``miter_limit`` is exceeded, then all joins with a larger qotient will appear as beveled ("butt" appearance).
+    
+  The default value 1 (and any smaller value) will ensure that all joins are rendered as a butt. A value of ``None`` will use the PDF default value.
   
   Example text showing spikes (``miter_limit=None``):
 
-  .. image:: images/img-rendermode.*
+  .. image:: images/spikes-yes.*
 
-   Example text suppressing spikes (``miter_limit=1``):
+  Example text suppressing spikes (``miter_limit=1``):
 
-  .. image:: images/img-rendermode.*
+  .. image:: images/spikes-no.*
 
 ----
 
